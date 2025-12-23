@@ -7,6 +7,7 @@ import { IntentConfirmationCard } from "@/components/intent-confirmation-card";
 import { MeaningIndexPanel } from "@/components/meaning-index-panel";
 import {
   HistoryItem,
+  IntentConfirmationStatus,
   IntentUIState,
   MeaningEntry,
   TaskNode,
@@ -23,6 +24,24 @@ import {
   useChatContext,
 } from "@copilotkit/react-ui";
 import { useMemo, useRef, useState } from "react";
+
+const intentConfirmationStatuses = [
+  "idle",
+  "needs_clarification",
+  "confirmed",
+] as const;
+
+const isIntentConfirmationStatus = (
+  status: string,
+): status is IntentConfirmationStatus =>
+  intentConfirmationStatuses.includes(status as IntentConfirmationStatus);
+
+const historyRoles = ["user", "assistant", "tool"] as const;
+
+const isHistoryRole = (
+  role: string,
+): role is HistoryItem["role"] =>
+  historyRoles.includes(role as HistoryItem["role"]);
 
 export default function CopilotKitPage() {
   const [themeColor, setThemeColor] = useState("#6366f1");
@@ -52,6 +71,7 @@ export default function CopilotKitPage() {
           themeColor={themeColor}
           highlightedMeaning={highlightedMeaning}
           onHighlightMeaning={setHighlightedMeaning}
+          onSetThemeColor={setThemeColor}
         />
       </CopilotSidebar>
     </main>
@@ -62,10 +82,12 @@ function YourMainContent({
   themeColor,
   highlightedMeaning,
   onHighlightMeaning,
+  onSetThemeColor,
 }: {
   themeColor: string;
   highlightedMeaning: string | null;
   onHighlightMeaning: (key: string | null) => void;
+  onSetThemeColor: (color: string) => void;
 }) {
   const initialState: IntentUIState = {
     meaning_index: {},
@@ -144,7 +166,8 @@ function YourMainContent({
     },
   });
 
-  const respondRef = useRef<(response: string) => void>(() => undefined);
+  const respondRef =
+    useRef<((response: string) => void) | undefined>(undefined);
 
   useFrontendTool({
     name: "set_intent_confirmation",
@@ -155,10 +178,13 @@ function YourMainContent({
       { name: "context", type: "string" },
     ],
     handler({ status, prompt, options, context }) {
+      const nextStatus = isIntentConfirmationStatus(status)
+        ? status
+        : "needs_clarification";
       setState({
         ...safeState,
         intent_confirmation: {
-          status,
+          status: nextStatus,
           prompt,
           options,
           context,
@@ -234,9 +260,10 @@ function YourMainContent({
       { name: "tool_name", type: "string" },
     ],
     handler({ role, content, tool_name }) {
+      const nextRole = isHistoryRole(role) ? role : "assistant";
       const item: HistoryItem = {
         id: crypto.randomUUID(),
-        role,
+        role: nextRole,
         content,
         tool_name,
         timestamp: new Date().toISOString(),
@@ -252,7 +279,7 @@ function YourMainContent({
     name: "set_theme_color",
     parameters: [{ name: "themeColor", type: "string", required: true }],
     handler({ themeColor }) {
-      setThemeColor(themeColor);
+      onSetThemeColor(themeColor);
     },
   });
 
@@ -294,7 +321,7 @@ function YourMainContent({
       description: "Request clarification from the user.",
       render: ({ respond }) => {
         respondRef.current = respond;
-        return null;
+        return <></>;
       },
     },
     [safeState, setState],
@@ -354,7 +381,7 @@ function YourMainContent({
             <IntentConfirmationCard
               confirmation={safeState.intent_confirmation}
               onRespond={(response) => {
-                respondRef.current(response);
+                respondRef.current?.(response);
                 setState({
                   ...safeState,
                   intent_confirmation: {
