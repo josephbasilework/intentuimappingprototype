@@ -29,7 +29,7 @@
 
 ---
 
-## [pending] Task ID: task-002 — Enumerate CopilotKit architectural components in scope
+## [completed] Task ID: task-002 — Enumerate CopilotKit architectural components in scope
 
 **Description:** Catalog the frontend/backend components needed, including runtime, hooks, UI components, and agent integration model.
 
@@ -42,9 +42,16 @@
 - [file] docs/QUICK_REFERENCE.md
 
 **Steps:**
-- [pending] List frontend packages, hooks, and UI components needed.
-- [pending] List backend runtime and agent integration components.
-- [pending] Identify required communication protocol(s).
+- [completed] List frontend packages, hooks, and UI components needed.
+- [completed] List backend runtime and agent integration components.
+- [completed] Identify required communication protocol(s).
+
+**Notes:**
+- **Frontend packages:** `@copilotkit/react-core`, `@copilotkit/react-ui`, `@copilotkit/runtime`, `@ag-ui/client`.
+- **Frontend hooks:** `useCoAgent`, `useFrontendTool`, `useRenderToolCall`, `useHumanInTheLoop`, `useDefaultTool`, `useCopilotAction`, `useCopilotReadable`.
+- **Frontend UI components:** `CopilotKit` provider, `CopilotSidebar` (optional `CopilotChat`/`CopilotPopup` for history panel or auxiliary chat UI), custom intent/meaning components wired to shared state.
+- **Backend runtime/agent components:** PydanticAI `Agent`, `RunContext`, `StateDeps`, state models, `StateSnapshotEvent`/`EventType` for state sync, `agent.to_ag_ui()` to expose AG-UI-compatible FastAPI app, `uvicorn` to serve.
+- **Protocol:** AG-UI over HTTP between Next.js `CopilotRuntime` API route and backend agent, using `HttpAgent` as the client adapter.
 
 ---
 
