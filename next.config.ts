@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 
 if (process.platform === "win32" && !process.env.CSS_TRANSFORMER_WASM) {
   process.env.CSS_TRANSFORMER_WASM = "1";
@@ -7,7 +8,7 @@ if (process.platform === "win32" && !process.env.CSS_TRANSFORMER_WASM) {
 const nextConfig: NextConfig = {
   serverExternalPackages: ["@copilotkit/runtime"],
   turbopack: {
-    root: __dirname,
+    root: path.resolve(__dirname, ".."),
   },
 };
 
