@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+import os
 from textwrap import dedent
 
 from ag_ui.core import EventType, StateSnapshotEvent
@@ -16,8 +17,36 @@ from models.task_dag import Dependency, Source, Step, TaskNode, TaskStatus, Task
 
 load_dotenv()
 
+
+def _load_gateway_model() -> OpenAIResponsesModel:
+    gateway_base_url = os.getenv("PYDANTIC_AI_GATEWAY_BASE_URL")
+    if not gateway_base_url:
+        raise ValueError(
+            "Missing PYDANTIC_AI_GATEWAY_BASE_URL. Set the Pydantic AI Gateway base URL "
+            "to route requests through the gateway."
+        )
+
+    gateway_api_key = os.getenv("PYDANTIC_AI_GATEWAY_API_KEY")
+    byok_api_key = os.getenv("PYDANTIC_AI_BYOK_API_KEY") or os.getenv("OPENAI_API_KEY")
+
+    if gateway_api_key:
+        api_key = gateway_api_key
+    elif byok_api_key:
+        api_key = byok_api_key
+    else:
+        raise ValueError(
+            "Missing gateway credentials. Set PYDANTIC_AI_GATEWAY_API_KEY for gateway "
+            "billing or PYDANTIC_AI_BYOK_API_KEY/OPENAI_API_KEY for BYOK access."
+        )
+
+    return OpenAIResponsesModel(
+        "gpt-4.1-mini",
+        base_url=gateway_base_url,
+        api_key=api_key,
+    )
+
 agent = Agent(
-    model=OpenAIResponsesModel("gpt-4.1-mini"),
+    model=_load_gateway_model(),
     deps_type=StateDeps[IntentUIState],
     system_prompt=dedent(
         """
