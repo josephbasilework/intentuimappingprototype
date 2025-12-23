@@ -4,7 +4,7 @@
 
 ---
 
-## [pending] Task ID: task-001 — Confirm product goal & scope boundaries
+## [completed] Task ID: task-001 — Confirm product goal & scope boundaries
 
 **Description:** Align on the Intent UI Mapping Prototype v0.1 goals, success criteria, and scope constraints before implementation planning proceeds.
 
@@ -16,9 +16,16 @@
 - [file] docs/INDEX.md
 
 **Steps:**
-- [pending] Identify required user outcomes, success metrics, and explicit exclusions.
-- [pending] Extract scope boundaries and non-goals to inform later task scoping.
-- [pending] Summarize stakeholder-facing statement of intent for plan alignment.
+- [completed] Identify required user outcomes, success metrics, and explicit exclusions.
+- [completed] Extract scope boundaries and non-goals to inform later task scoping.
+- [completed] Summarize stakeholder-facing statement of intent for plan alignment.
+
+**Notes:**
+- **Required user outcomes:** Users can submit text/files, receive intent clarification in a dedicated confirmation area (not the chat input), maintain a full interaction history, and curate a Meaning Index that maps phrases to definitions/sources.
+- **Success metrics:** Intent clarification requests surface in the confirmation area, Meaning Index entries persist with sources, Task DAG tasks can be created/updated with dependencies, and the History panel logs all requests/replies/tool results.
+- **Explicit exclusions/non-goals:** No traditional chatbot continuation in the input field; UI should not rely solely on chat for clarification; scope limited to v0.1 intent/meaning clarification and Task DAG planning capabilities.
+- **Scope boundaries:** Frontend is Next.js with CopilotKit UI/hooks; backend agent is Pydantic AI using CopilotKit AG-UI protocol; primary UI components are Input Area, Meaning/Intent Confirmation Area, History Panel, and Meaning Index.
+- **Stakeholder intent statement:** Deliver a v0.1 Intent UI Mapping Prototype that helps users clarify intent via a state-sensitive confirmation area, records all interactions in history, and maintains a Meaning Index and Task DAG for traceable planning.
 
 ---
 
