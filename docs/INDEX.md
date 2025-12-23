@@ -34,6 +34,8 @@ This project implements a **User Intent/Meaning Clarification System** using Cop
 |------|-------------|---------|
 | [GOAL.md](./GOAL.md) | Project goals and requirements | Defines v0.1 features and UI components |
 | [TASK_DAG_PROTOCOL.md](./TASK_DAG_PROTOCOL.md) | Task DAG protocol specification | Defines the structure and rules for task organization |
+| [TASK_DAG_PLAN.md](./TASK_DAG_PLAN.md) | Task DAG plan | Canonical task plan following the protocol format |
+| [TASK_DAG_INDEX.md](./TASK_DAG_INDEX.md) | Task DAG index | Task lookup table with status tracking |
 
 ### CopilotKit Documentation Indices
 
@@ -182,6 +184,7 @@ Actions and tools comprehensive guide:
 | Date | Changes |
 |------|---------|
 | 2025-12-23 | Initial documentation index created |
+| 2025-12-23 | Added Task DAG plan and index references |
 
 ---
 
