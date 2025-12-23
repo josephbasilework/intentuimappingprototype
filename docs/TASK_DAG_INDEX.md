@@ -10,7 +10,7 @@ This index provides quick access to each task in the Task DAG Plan and tracks wh
 
 | Task ID | Title | Status | Link |
 |--------|-------|--------|------|
-| task-001 | Confirm product goal & scope boundaries | pending | [task-001](./TASK_DAG_PLAN.md#pending-task-id-task-001--confirm-product-goal--scope-boundaries) |
+| task-001 | Confirm product goal & scope boundaries | completed | [task-001](./TASK_DAG_PLAN.md#completed-task-id-task-001--confirm-product-goal--scope-boundaries) |
 | task-002 | Enumerate CopilotKit architectural components in scope | pending | [task-002](./TASK_DAG_PLAN.md#pending-task-id-task-002--enumerate-copilotkit-architectural-components-in-scope) |
 | task-003 | Define shared state model & intent schema | pending | [task-003](./TASK_DAG_PLAN.md#pending-task-id-task-003--define-shared-state-model--intent-schema) |
 | task-004 | Map frontend CopilotKit hooks & state flows | pending | [task-004](./TASK_DAG_PLAN.md#pending-task-id-task-004--map-frontend-copilotkit-hooks--state-flows) |
@@ -27,7 +27,7 @@ This index provides quick access to each task in the Task DAG Plan and tracks wh
 
 ## Completed Tasks
 
-_None yet._
+- task-001 — Confirm product goal & scope boundaries
 
 ---
 
